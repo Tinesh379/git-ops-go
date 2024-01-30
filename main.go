@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"gopkg.in/src-d/go-git.v4"
@@ -68,11 +69,19 @@ func main() {
 	// Format the time two days from now using the layout
 	migrationWindow := twoDaysFromNow.Format(layout)
 
-	line := "\nadding new line to the readme file using git package in golang " + migrationWindow + "\n"
-	_, err = file.WriteString(line)
-	if err != nil {
-		fmt.Println("Error writing to file:", err)
-		return
+	projects := "group1/subgroup1/project1,   group2/subgroup2/project2"
+
+	projectsSlice := strings.Split(projects, ",")
+
+	for _, proj := range projectsSlice {
+
+		line := "\n" + strings.TrimSpace(proj) + " " + migrationWindow + "\n"
+		_, err = file.WriteString(line)
+		if err != nil {
+			fmt.Println("Error writing to file:", err)
+			return
+		}
+
 	}
 
 	defer file.Close()
