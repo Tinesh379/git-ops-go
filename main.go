@@ -19,6 +19,8 @@ func init() {
 	// Load GITHUB user and password from env variables
 	gitUser = os.Getenv("GITHUB_USER")
 	gitPass = os.Getenv("GITHUB_PAT")
+
+	GetProjectDetails()
 }
 
 func main() {
