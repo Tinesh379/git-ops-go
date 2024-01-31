@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,7 +21,7 @@ func GitClone() {
 	})
 
 	if err != nil && err != git.ErrRepositoryAlreadyExists {
-		fmt.Println("Error cloning repository:", err)
+		log.Fatal("Error cloning repository:", err)
 		return
 	}
 
@@ -33,7 +34,7 @@ func EditFile(fileName string) {
 	absFilePath := filepath.Join(cloneDirectory, fileName)
 	file, err := os.OpenFile(absFilePath, os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		log.Fatal("Error opening file:", err)
 		return
 	}
 
@@ -53,7 +54,7 @@ func EditFile(fileName string) {
 		line := "\n" + strings.TrimSpace(proj) + " " + migrationWindow + "\n"
 		_, err = file.WriteString(line)
 		if err != nil {
-			fmt.Println("Error writing to file:", err)
+			log.Fatal("Error writing to file:", err)
 			return
 		}
 
@@ -67,19 +68,19 @@ func GitAddAndCommit(fileName string) {
 
 	r, err := git.PlainOpen(cloneDirectory)
 	if err != nil {
-		fmt.Println("Error opening repository:", err)
+		log.Fatal("Error opening repository:", err)
 		return
 	}
 	w, err := r.Worktree()
 	if err != nil {
-		fmt.Println("Error getting worktree:", err)
+		log.Fatal("Error getting worktree:", err)
 		return
 	}
 
 	// Add the file to the staging area
 	_, err = w.Add(fileName)
 	if err != nil {
-		fmt.Println("Error adding file to the staging area:", err)
+		log.Fatal("Error adding file to the staging area:", err)
 		return
 	}
 
@@ -93,7 +94,7 @@ func GitAddAndCommit(fileName string) {
 		},
 	})
 	if err != nil {
-		fmt.Println("Error committing changes:", err)
+		log.Fatal("Error committing changes:", err)
 		return
 	}
 
@@ -109,7 +110,7 @@ func GitPush() {
 		},
 	})
 	if err != nil {
-		fmt.Println("Error pushing changes:", err)
+		log.Fatal("Error pushing changes:", err)
 		return
 	}
 
