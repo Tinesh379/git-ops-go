@@ -41,7 +41,6 @@ func EditFile(fileName string) {
 	//add time stamp for migration
 	currentTime := time.Now()
 	twoDaysFromNow := currentTime.Add(2 * 24 * time.Hour)
-	timeFormat := "2006-01-02 15:04:05"
 	migrationWindow := twoDaysFromNow.Format(timeFormat)
 
 	//projects := "group1/subgroup1/project1,   group2/subgroup2/project2"
@@ -85,7 +84,7 @@ func GitAddAndCommit(fileName string) {
 	}
 
 	// Commit the changes
-	commitMsg := " #2 Add a new line to the file"
+	commitMsg := " #2 Add a new line to the file " + time.Now().Format(timeFormat)
 	commit, err := w.Commit(commitMsg, &git.CommitOptions{
 		Author: &object.Signature{
 			Name:  "Tinesh Katta",

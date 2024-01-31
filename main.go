@@ -7,6 +7,7 @@ import (
 const (
 	repoURL        string = "https://github.com/Tinesh379/webapp.git"
 	cloneDirectory string = "D:\\UpSkilling\\golang\\workdir\\webapp"
+	timeFormat     string = "2006-01-02 15:04:05"
 )
 
 var (
